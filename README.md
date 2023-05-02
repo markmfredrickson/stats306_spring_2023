@@ -48,9 +48,9 @@ Mariot Tsitoara.
 
 ## Grading
 
-* Homework Assignments (40%)
+* Homework Assignments (50%)
 * Quizzes (20%)
-* Labs (20%)
+* Labs (10%)
 * Project 1 (10%)
 * Project 2 (10%)
 
