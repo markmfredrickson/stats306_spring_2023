@@ -35,58 +35,61 @@ By the end of this course, you will
 
 ## Overview of Course
 
-We will reach our goals using:
+We will reach our goals using a partially "flipped classroom" approach
 
-* **Lecture**: introduction of conceptual materials, frequent opportunities to try solutions (a laptop highly recommended)
-* **Lab**: hands on problem solving individually and in teams
-* **Homework assignments**: 2 week assignments distributed and collected via Canvas
-* **Quizzes**: alternate week conceptual quizzes
-* **Exams**: Two mid-term exams and one final exam/final project
+* **Lec-Lab**: in-person or remote sessions with a lecture component and a hands on lab like component (MWTh 9am - 11am)
+* **Video Sessions**: Additional recorded material
+* **Lab assignments**: submitted after lec-lab or on own, graded for completion/good effort
+* **Homework assignments**: six weekly assignments
+* **Quizzes**: pre-session comprehension quizzes to test understanding from previous materials
+* **Projects**: Two projects where students demonstrate programming abilities
 
 ## Grading
 
-* Homework Assignments **(20%)**
-* Quizzes **(15%)**
-* Three Exams **(20%, each)** 
-  * Mid-term Exam 1, released 10/05, due 10/07
-  * Mid-term Exam 2, released 11/09, due 11/11
-  * Final Exam, due 12/14
-* Lab Attendance/Completion **(5%)**, two allowed absences
+* Homework Assignments **(50%)**
+* Quizzes **(20%)**, "two to one" points
+* Lab assignments **(10%)**, three dropped
+* Two projects **(10% each)**
+
+## Time breakdown
+
+Traditional time spent (spring half term):
+
+* Lecture: 6 hr/wk
+* Lab: 2 hr/wk
+* HW/projects/exam prep: 8 hr/wk
+* Total: 16 hr/wk
+
+Our breakdown:
+
+* Lab-lec: 6 hr/wk
+* Additional material: 2 hr/wk
+* Hw/projects: 7 hr/wk
+* Total: 16 hr/wk
 
 ## Working in Groups
 
-You are encouraged to work together on HW to discuss solutions and debug. You student **must** submit own work. Ask yourself, "Am I avoiding learning something in my actions?" If yes, don't do it.
-
-Quizzes and exams are your own work only.
-
-## Lab
-
->* Victor Verma, Lab 201, Tuesday, 4:00PM - 5:30PM, B760 EH
->* Benjamin Osafo Agyare, Lab 202, Tuesday, 5:30PM - 7:00PM, B760 EH
->* Jesse Wheeler, Lab 203, Tuesday, 8:30AM - 10:00AM, 269 WEISER
->* Yilei Zhang, Lab 204, Tuesday, 10:00AM - 11:30AM, 269 WEISER
-
-Lab attendance will be taken. Two allowed unexcused absences. Please contact your GSI if you require an excused absence.
+You are encouraged to work together on **all class material** to discuss
+solutions and debug. Each student must submit own work. Ask yourself, "Am I
+avoiding learning something in my actions?" If yes, don't do it.
 
 ## Materials
 
 All books are freely available through our library system or online:
 
-* [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham and Garett Grolemund
-* [Beginning Git and GitHub](https://search.lib.umich.edu/catalog/record/99187305231206381) by
+* Our main text book is [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham and Garett Grolemund
+* Time depending, we will pull additional material from
+    * [Advanced R](https://adv-r.hadley.nz/index.html)
+    * [Mastering Shiny](https://mastering-shiny.org/)
+* For learning git, we will use [Beginning Git and GitHub](https://search.lib.umich.edu/catalog/record/99187305231206381) by
 Mariot Tsitoara.
-* Several additional resources, documentation also listed on Canvas site.
-* Lectures will be recorded and available on Canvas.
-* Slides will be available before lecture.
+* For statistical background, we suggest [Practical Statistics for Data Scientists](https://search.lib.umich.edu/catalog/record/99187344801606381)
 
 ## Office Hours and Help
 
-* Instructor zoom office hours:
-  * Breakout room office hours: Tuesday 1pm to 3pm
-  * One-on-one meetings: Wednesday 1pm to 3pm
-* GSI office hours still being scheduled
-* You can go to any GSI's office hours, not just your lab instructor
-* Piazza via Canvas
+* Instructor zoom office hours: 2pm to 4pm on Zoom queue system
+* GSI office hours TBA
+* Piazza on Canvas
 
 ## Other policies
 
@@ -101,7 +104,7 @@ Canvas includes more detailed policies on
 
 ## Canvas
 
-[Stats 306 on Canvas](https://umich.instructure.com/courses/554168)
+[Stats 306 on Canvas](https://umich.instructure.com/courses/612043)
 
 ## Software
 
@@ -109,17 +112,8 @@ Canvas includes more detailed policies on
 * RStudio: A development environment for R
 * Git: Version control and collaboration for software projects
 
-## Getting Software
-
-Two options:
-
-* Install locally on your own computer, use campus computers (see directions on Canvas)
-* Use the Great Lakes cluster environment
-  * Request account (see canvas)
-  * Be on the university network or use the VPN (see canvas)
-  * Start a session on `greatlakes.arc-ts.umich.edu` (2 hours max)
   
-## More on R
+## R, a statistical programming language
 
 R is a *statistical programming language*:
 
@@ -134,14 +128,16 @@ R is a *statistical programming language*:
 * Being adopted by research, industry, government
 * Language of choice for statistical teaching (courses, books)
 
-## A tour of RStudio
-
 ## What is Git?
 
 * A **version control system** manages changes from multiple sources simultaneously.
 * A reasonable analogy: Google Docs with track changes turned on
 * Useful for groups working together to track changes to the software package and document why changes were made
 * We will use it to disseminate homework assignments, labs, and lecture materials.
+
+## Hands on: Install R, RStudio, and Git
+
+Visit our Canvas page for descriptions on how to install
 
 ## How does git work?
 
@@ -177,14 +173,6 @@ $ command -o --options argument1 argument2
 * `mkdir`: Make a new directory (folder)
 * `rm -r`: Recursively delete directories and everything inside (use carefully!)
 
-## Example Task
-
->* Check the current directory
->* Create a new directory for our stats 306 materials
->* Edit a file in RStudio in this directory
->* List all files in the directory using the CLI
->* Get help on the `cat` to print out line numbered file
-
 ## Git and the CLI
 
 When interacting with git, we will use commands like this:
@@ -210,7 +198,7 @@ To get a copy of them, **clone** the repository:
 
 ```
 $ cd LOCATION_YOU_WANT_TO_STORE_REPO
-$ git clone https://github.com/markmfredrickson/stats306_fall_2022.git
+$ git clone https://github.com/markmfredrickson/stats306_spring_2023.git
 ```
 
 ## Getting future updates
@@ -256,7 +244,7 @@ Task: Let's answer a few questions and prepare our HW for submission.
 
 ## Interactive slides
 
-If you bring a laptop, you can run these slides and do interactive examples.
+You can run these slides and do interactive examples.
 
 Change the following to print out the number 8. Then make it print twice the value of `a`:
 ```{r example-ex, exercise = TRUE}
@@ -264,20 +252,8 @@ a <- 7
 print(a)
 ```
 
-## Next Steps
 
-* Visit our Canvas site
-* Sign up for Piazza
-* Look at the recommended textbooks
-* Get a Great Lakes account
-* Try out RStudio on Great Lakes
-* Use git to clone the Stats 306 repository
 
-## Labs
-
-* No lab the first week
-* First lab 9/6
-* Please attend your assigned lab
 
 
 

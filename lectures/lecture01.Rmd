@@ -18,7 +18,6 @@ library(learnr)
 
 * Course overview, objectives, policies
 * Software: R, RStudio, Git
-* Great Lakes cluster environment
 * Command line interface (CLI)
 
 ## Git and the CLI
@@ -237,7 +236,7 @@ Find the difference between 193 and 7. What is this value divided by two? What i
 * For large programs, having variable names that describe what they hold is much better
 * Compare `a` to `number_of_seconds_in_a_day`
 * In RStudio, it's just as easy to type with `TAB` completion
-* On HW assignments, GSIs will be awarding points for *style* (readable code)
+* On HW assignments, we will be awarding points for *style* (readable code)
 
 ## Using variables: functions
 
@@ -397,4 +396,3 @@ print(some_data)
 * Variables: boxes to hold data
 * Functions: little programs that operate on data
 
-Next time: Lab on Tuesday, we will discuss more about R data next Wednesday
