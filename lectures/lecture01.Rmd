@@ -12,6 +12,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(tidyverse)
 ```
 
 ## Review 
@@ -19,45 +20,27 @@ library(learnr)
 * Course overview, objectives, policies
 * Software: R, RStudio, Git
 * Command line interface (CLI)
+* Getting our materials using git
 
-## Git and the CLI
+## What's in our repository
 
-When interacting with git, we will use commands like this:
+>* Data sets will we use
+>* Homework assignments
+>* Lab notebooks 
+>* Lecture notes (like these)
 
-```
-$ git SUBCOMMAND -o --options ARG1 ARG2 ...
-```
-
-Some example subcommands will be `pull` to get updates, `log` to see the history, `add` to stage files, and `commit` to commit changes.
-
-## Let git know who you are
-
-Last time we saw
-
-* `git config`
-* `git clone`
-
-## Getting future updates
-
-```
-$ cd PATH/TO/REPO
-$ git pull
-```
-
-## What can we do with the repo?
-
->* Run these slides
->* Edit an example homework and save changes to your local repository.
+All homework, labs, and lectures are **RMarkdown** documents.
 
 ## RMarkdown documents
 
-RMarkdown documents blend **code** and **presentation**. They will be the tool we use for
+RMarkdown documents blend **code** and **presentation**. 
 
->* Lecture slides
->* Labs
->* Homework assignments
-
-HW Workflow: edit document, knit, submit HTML 
+General workflow:
+* Open `.Rmd` file
+* Run code in R chunks
+* Edit text and code to answer prompts
+* Knit to HTML file
+* (Homework/projects) submit HTML files on Gradescope
 
 ## What is markdown?
 
@@ -88,9 +71,9 @@ it were an R chunk, even though it is not really one. -->
 * The `key = value` controls the behavior of the chunk (optional). Example, `include = FALSE` to hide chunk.
 * `CTRL-ALT-I` inserts a new chunk your RMarkdown document.
 
-## Working on the example HW again
+## `homework/example-homework.Rmd`
 
-Task: Let's answer a few questions and prepare our HW for submission.
+Using an example homework file, we'll answer a few questions and prepare our HW for submission.
 
 ## Saving changes to our local repo
 
