@@ -15,107 +15,6 @@ library(learnr)
 library(tidyverse)
 ```
 
-## Review 
-
-* More on RMarkdown documents
-* Variables: boxes for data
-* Functions: take inputs (arguments), return new values
-
-## Variable and Function application example
-
-```{r}
-name <- "Mark Fredrickson"
-name_tag <- paste("My", "name", "is", name)
-name_tag
-```
-
-## Side effects
-
-Some functions also have **side effects** beyond just returning a value.
-
-* Load or save a file
-* Take input from a mouse
-* Display something on the screen
-
-## The `curve` function
-
-The `curve` function is a useful way to graph out a function:
-```{r, height = 4, width = 7}
-curve(sin(x))
-```
-
-Here `x` is a "special variable" that does not exist outside the use of `curve`.
-
-## Changing the bounds of the plot
-
-`curve` can take more than just one argument,
-
-```{r, height = 3, width = 5}
-curve(sin(x), 0, 2 * pi)
-```
-
-## Optional and named arguments
-
-R allows you to use the name of arguments to pass them in any order:
-
-```{r}
-curve(to = 2 * pi, expr = sin(x), from= 0)
-```
-
-By *default* `from = 0` and `to = 1`
-
-
-## Avoiding making variables we don't need
-
-Sometimes we only need to use something once, so taking the time to come up with a variable name is unnecessary. For example,
-
-```{r}
-radians_45_degrees <- 2 * pi * 45/360
-sin(radians_45_degrees)
-```
-
-Instead we can use **pipes** to pass the first argument of function
-
-```{r}
-(2 * pi * 45/360) |> sin()
-```
-
-(NB: See the help page for `Syntax` for operator precedence.)
-
-## R's assignment operators
-
-R has two ways to store data in variables:
-
-```{r}
-variable_arrow <- 7
-variable_equal = 10
-variable_arrow + variable_equal
-```
-
-I like the arrow because it can be reversed
-```{r}
-7 -> variable_reversed
-pi * variable_reversed
-```
-
-## Some special values
-
-In addition to `pi`, R has some other built in variables (see help page for `Constants`).
-
-Also several special data values
-
-* `NA` means "missing". Including a `NA` value in a calculation will usually make the result also `NA`.
-* `NULL` means "not set yet" and is often used for optional arguments to functions
-* `NaN` means something was divided by zero or other mathematical impossibility.
-
-What will happen with this code?
-
-```{r na-prop, exercise = TRUE}
-angle_degrees <- NA
-angle_radians <- 2 * pi * angle_degrees / 360
-sin(angle_radians)
-```
-
 ## Statistical programming
 
 Recall that R is a **statistical** programming language. In statistics we often work with:
@@ -153,6 +52,24 @@ random_u01[10] # last item
 random_u01[-1] # all but first
 random_u01[1:3] # first three
 random_u01[c(1, 3, 7, 1)]
+```
+
+
+
+## Relational Operators
+
+```{r}
+x <- 1
+y <- 2
+
+x < y
+x > y
+x <= y
+x >= y
+x == y
+x != y
+
+!(x == y) # negation
 ```
 
 ## Vectors, subsetting based on qualities
@@ -204,6 +121,33 @@ Recall, the `$` operator lets us get items from lists:
 
 ```{r}
 mpg$hwy |> mean() # equiv to mean(mpg$hwy)
+```
+
+## Functions for basic descriptive statistics
+
+```{r}
+sum(mpg$hwy)
+mean(mpg$hwy)
+var(mpg$hwy)
+sqrt(var(mpg$hwy)) # standard deviation
+median(mpg$hwy)
+IQR(mpg$hwy)
+quantile(mpg$hwy, c(0.25, 0.75))
+```
+
+## Dealing with missingness
+
+Here's a vector with some missing values
+```{r}
+v <- c(1, NA, 2, 10, 3, NA)
+mean(v)
+```
+
+To delete the missing values we have some options:
+```{r}
+mean(v, na.rm = TRUE)
+na.omit(v) |> mean()
+v[!is.na(v)] |> mean()
 ```
 
 ## Plotting: Visual representation of data
@@ -375,8 +319,3 @@ ggplot(data = mpg,
 * Almost everything can be tweaked in ggplot, finding it is the tricky part
 * The [R Graph Gallery](https://r-graph-gallery.com/) is a great source of inspiration and instruction
 
-## Before next class
-
-* First quiz released on Thursday
-* Get the first homework
-* Read sections 3.5 to 3.9 of R for Data Science

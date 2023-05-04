@@ -221,20 +221,30 @@ Find the difference between 193 and 7. What is this value divided by two? What i
 * In RStudio, it's just as easy to type with `TAB` completion
 * On HW assignments, we will be awarding points for *style* (readable code)
 
-## Using variables: functions
+## Functions 
+A key tool in any programming language is a **function**.
+
+* R functions behave (mostly) like mathematical functions $f(x)$.
+* They take **arguments** and return **values**
+* Encapsulate code (mini-programs)
+* Make it easy to repeat operations
+
+## Functions in R
 
 Once we have data stored in a variable, one of the main ways to use it is to **call a function.**
 
 ```{r, eval = FALSE}
-function_name(argument1, argument2, named_argument = additional_data, ...)
+return_value <- function_name(argument1, argument2, named_argument = additional_data, ...)
 ```
 
-## What do functions do?
+* Like math functions, we use the syntax `f()` to run the function
+* All **arguments** are **passed** to the function inside of the `()` separated by commas
+* Arguments can be passed in **positional** order or
+* Passed by **name**
+* Some arguments are **optional** when they have a default value
+* `...` means "any number of additional arguments"
+* `return_value` is the output of the function
 
-* Functions behave (mostly) like mathematical functions $f(x)$.
-* They take **arguments** and return **values**
-* Encapsulate code (mini-programs)
-* Make it easy to repeat operations
 
 ## Converting from degrees to radians
 
@@ -251,14 +261,19 @@ Exercise: compute the radian equivalent of 45 degrees (use a good variable name!
 
 ## Math operations are functions too
 
+```{r, results='hide'}
+mult <- function(x, y) { x * y }
+div <- function(x, y) { x / y }
+```
+
 Suppose we had `mult(x, y)` and `div(x, y)`.
 
 We could have written the previous calculation as 
 
-```{r eval = FALSE}
+```{r}
 mult(2, mult(pi, div(45, 360)))
 ```
-Those aren't real functions, but R transforms `2 * pi * 45/360` into that behind the scenes.
+Those aren't built in functions, but R transforms `2 * pi * 45/360` into that behind the scenes.
 
 We call functions that do not have explicit function calls **operators**. See help pages for `Arithmetic Operators`, `Relational Operators`, and `Logical Operators` for some of the most common.
 
@@ -266,14 +281,48 @@ We call functions that do not have explicit function calls **operators**. See he
 
 In R, when we call a function, first the **arguments** are evaluated, then the function is called.
 
-```{r eval = FALSE}
+```{r}
 sin(mult(2, mult(pi, div(45, 360))))
 ```
+Equivalent to:
+```{r}
+value1 <- div(45, 360)
+value2 <- mult(pi, value1)
+value3 <- mult(2, value2)
+sin(value3)
+```
 
-* Compute `value1 <- div(45, 360)` 
-* Compute `value2 <- mult(pi, value1)`
-* Compute `value3 <- mult(2, value2)`
-* Compute `sin(value3)`
+## Avoiding single use variables
+
+Sometimes we only need to use something once, so taking the time to come up with a variable name is unnecessary. 
+
+Instead we can use **pipes** to pass the output of one function to the **first argument** of a second function.
+
+```{r, eval = FALSE}
+value <- f()
+g(value)
+
+# pipes
+f() |> g()
+```
+
+Chaining pipes:
+```{r}
+div(45, 360) |>  
+  mult(pi) |>
+  mult(2) |>
+  sin()
+```
+
+## Functions as variables
+
+In R, **functions are variables** which means that we can use them like would we any other variable.
+
+```{r}
+class(123)
+class(sin)
+```
+
 
 ## Side effects
 
@@ -287,17 +336,16 @@ Some functions also have **side effects** beyond just returning a value.
 
 The `curve` function is a useful way to graph out a function:
 ```{r, height = 4, width = 7}
-curve(sin(x))
+curve(sin)
 ```
 
-Here `x` is a "special variable" that does not exist outside the use of `curve`.
 
 ## Changing the bounds of the plot
 
 `curve` can take more than just one argument,
 
 ```{r, height = 3, width = 5}
-curve(sin(x), 0, 2 * pi)
+curve(sin, 0, 2 * pi)
 ```
 
 ## Optional and named arguments
@@ -305,28 +353,11 @@ curve(sin(x), 0, 2 * pi)
 R allows you to use the name of arguments to pass them in any order:
 
 ```{r}
-curve(to = 2 * pi, expr = sin(x), from= 0)
+curve(to = 2 * pi, expr = sin, from= 0)
 ```
 
 By *default* `from = 0` and `to = 1`
 
-
-## Avoiding making variables we don't need
-
-Sometimes we only need to use something once, so taking the time to come up with a variable name is unncessary. For example,
-
-```{r}
-radians_45_degrees <- 2 * pi * 45/360
-sin(radians_45_degrees)
-```
-
-Instead we can use **pipes** to pass the first argument of function
-
-```{r}
-(2 * pi * 45/360) |> sin()
-```
-
-(NB: See the help page for `Syntax` for operator precedence.)
 
 ## R's assignment operators
 
@@ -342,6 +373,8 @@ I like the arrow because it can be reversed
 ```{r}
 7 -> variable_reversed
 pi * variable_reversed
+pi |> sqrt() -> sqrt_pi
+sqrt_pi
 ```
 
 ## Some special values
@@ -362,18 +395,8 @@ angle_radians <- 2 * pi * angle_degrees / 360
 sin(angle_radians)
 ```
 
-## Resassigning values
-
-What happens will the following code produce?
-```{r reassign, exercise = TRUE}
-some_data <- "SECRET CODE"
-some_data <- 777
-print(some_data)
-```
-
 ## Summary
 
-* Git and the command line
 * RMarkdown documents: text and code chunks
 * R and the REPL
 * Variables: boxes to hold data
