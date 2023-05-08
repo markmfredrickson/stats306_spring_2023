@@ -62,3 +62,15 @@ Paper citation: Saif M. Mohammad and Svetlana Kiritchenko. (2018). WikiArt Emoti
 
 > This dataset includes the retweets posted on Twitter by accounts associated with members of the US Congress during the 115th Congress (2017-2018).
 
+## Great Lakes Water Levels
+
+* File: `GLHYD_data_english_cleaned.csv.gz`
+* Date retrieved: 2023-05-04
+* URL: https://www.lre.usace.army.mil/Missions/Great-Lakes-Information/Great-Lakes-Information-2/Water-Level-Data/
+
+The US Army Corps of Engineers (Detroit District) publishes water levels
+(averaged over several locations) for the Great Lakes. Note that they treat
+Michigan and Huron as a single body of water (which you might agree with if
+you've ever driven over the Mackinac Bridge), and Lake St. Clair gets its own
+readings. These values are expressed as (roughly) the height of the body of
+water above sea level.

@@ -156,7 +156,7 @@ v[!is.na(v)] |> mean()
 
 Humans have a wonderful ability to process visual stimuli quickly.
 
-Great for displaying large data sets that might be easy to describe.
+Great for displaying large data sets that might be difficult to describe.
 
 ## Plotting ain't easy
 
@@ -251,6 +251,30 @@ efficiency + geom_point()
 ```{r}
 ggplot(data = mpg) + geom_point(aes(x = displ, y = hwy, color = cyl))
 ```
+
+## Exercise: Great Lakes water levels
+
+Here's a data set from the US Army Corps of Engineers showing the height of the Great Lakes (with Michigan and Huron being one body) above sea level, aggregate by year.
+
+```{r}
+glwl <- read_csv("data/GLHYD_data_english_cleaned.csv.gz") |>
+  group_by(body, year) |> summarize(ht = median(height_ft)) |> ungroup()
+glwl
+```
+
+Use this data set to make a scatter plot of the height of each lake in each year, colored by which `body` the reading is from.
+
+```{r glwl-plot-setup}
+
+glwl <- read_csv("data/GLHYD_data_english_cleaned.csv.gz") |>
+  group_by(body, year) |> summarize(ht = median(height_ft)) |> ungroup()
+```
+
+```{r glwl-plot, exercise = TRUE}
+
+```
+
+Improve your plot by changing it to a `geom_line()`
 
 ## What aesthetic mappings can I use?
 
