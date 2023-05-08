@@ -1,10 +1,7 @@
 ---
 title: "STATS306 Lab2"
 author: "Your Name"
-output: 
-  html_document:
-    number_sections: true
-runtime: shiny_prerendered
+output: html_document
 ---
 
 <style type="text/css">
@@ -15,16 +12,9 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(learnr)
 library(tidyverse)
 ```
 
-# Logistics
-
-- Quiz 1 feedback
-- Quiz 2 is due by 11:59 PM on 9/25.
-- The HW1 deadline has been pushed back one week; it's now due by 11:59 PM on 9/25.
-- HW2 will be released on 9/18 and will be due by 11:59 PM on 10/2.
 
 # Plotting with `ggplot2`
 
@@ -250,7 +240,7 @@ Complete the code below to use boxplots to visualize the relationship between `i
 ```{r exercise3c, exercise=TRUE}
 midwest %>%
   mutate(inmetro = as.logical(inmetro)) %>%
-
+  ggplot()
 ```
 
 ##### (d) {-}
@@ -260,7 +250,7 @@ Now complete the code to use frequency polygons to visualize the relationship. I
 ```{r exercise3d, exercise=TRUE}
 midwest %>%
   mutate(inmetro = as.logical(inmetro)) %>%
-
+  ggplot
 ```
 
 Finally, if both variables are categorical, we can plot them using `geom_count()`.

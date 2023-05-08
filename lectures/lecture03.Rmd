@@ -208,15 +208,3 @@ ggplot(data = mpg, aes(x = class, y = hwy)) +
 * Export from the Plots panel in RStudio
 * `ggsave` function to save to file (variety of formats)
 
-## General observations
-
-* Generally limit plots to having 3 or 4 distinct visual variables
-* Typically only one geometry type, but there are some great counter examples
-* Almost everything can be tweaked in ggplot, finding it is the tricky part
-* The [R Graph Gallery](https://r-graph-gallery.com/) is a great source of inspiration and instruction
-
-## Before next class
-
-* Continue on next HW
-* Lab tomorrow
-* Read sections 3.8, 3.9, 5.0 to 5.5 of R for Data Science
