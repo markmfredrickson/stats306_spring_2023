@@ -149,9 +149,7 @@ c("Hi", "Low", "Low", "Medium") %in% c("Medium", "High")
 
 ```
 
-## Example solution
-
-```{r}
+```{r lastex-solution}
 at_least_2 <- group_by(mpg, manufacturer) |> 
   summarize(per_class = n_distinct(class)) |>
   filter(per_class > 1)
@@ -193,6 +191,15 @@ Write an R function to transform a vector into a $Z$-score
 x <- c(-1, 2, 1.1)
 ```
 
+```{r scale-solution}
+z_score <- function(input) {
+  (input - mean(input)) / sd(input)
+}
+
+z_score(input)
+```
+
+
 (NB: this function is called `scale` in R)
 
 ## Common use case: mutations and summaries
@@ -230,6 +237,3 @@ Let's convert to Celsius ($C = (F - 32) \cdot 5/9$) by first creating a function
 
 ```
 
-## Next time
-
->* R for Data Science: 19.4 - 19.6, 7 - 7.3

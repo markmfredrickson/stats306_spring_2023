@@ -41,15 +41,6 @@ library(doParallel)
 tutorial_options(exercise.reveal_solution=FALSE)
 ```
 
-## Logistics
-
-- HW 5
-- End of the semester logistics:
-    - After the lab today, one more lab next week. 
-    - There will be a review session, probably Friday Dec 9, around 5:30 pm. To be scheduled. 
-- Last quiz this weekend (debugging & performance)
-- Final Exam
-
 ## Today's Content
 
 - Debugging Review

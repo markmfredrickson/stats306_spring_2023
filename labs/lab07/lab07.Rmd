@@ -33,13 +33,6 @@ library(lubridate)  # For some functions involving dates
 library(nycflights13)
 ```
 
-## Logistics
-
-* HW 4 has been posted (or will be posted later today)
-* Quiz 3 is due October 30
-* Exam 2 is due on Nov 11, more details to come. 
-
-* Questions?  
 
 ## Today's Content
 

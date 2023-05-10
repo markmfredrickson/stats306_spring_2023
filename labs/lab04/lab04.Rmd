@@ -21,17 +21,6 @@ library(tidyverse)  # For ggplot2, dplyr
 library(gapminder)
 ```
 
-## Logistics
-
-> - HW2 is due on Oct 2.
-
-
-
-## 
-
-> - Review of Quiz 2
-> - Directory Commands
-
 
 ## Today's Content
 

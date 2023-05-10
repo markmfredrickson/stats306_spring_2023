@@ -27,15 +27,9 @@ library(shiny)
 tutorial_options(exercise.reveal_solution=FALSE)
 ```
 
-## Logistics
-
-- HW 5 will be due on Dec 11.
-- Final Exam will be released on Dec 12, and due on Dec 14.
-- This Friday we have an in-person review session from 5:30 to 7:30pm in Lorch 140.
 
 ## Today's Content
 
-- Review of Quiz 5.
 - Basics of Shiny.
 
 ## Basics of Shiny

@@ -38,11 +38,6 @@ tutorial_options(exercise.reveal_solution=FALSE)
 ```
 
 
-## Logistics
-
-- HW 5 due on Dec, 11
-- Quiz 5 will on Dec, 4
-
 ## Today's Content
 
 - Iterations
