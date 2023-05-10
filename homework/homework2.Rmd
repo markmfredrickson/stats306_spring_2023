@@ -1,7 +1,6 @@
 ---
-title: "Stats 306, Fall 2022, Homework 2"
+title: "Stats 306, Spring 2023, Homework 2"
 author: "Your Name, Your Uniqname"
-date: "Due October 2, 11:59PM EST"
 output: html_document
 ---
 
@@ -99,7 +98,7 @@ Using the `cut` function and `mutate`, make a new column that breaks the day int
 * Early Day (6am to 2pm)
 * Late Day (2pm to 10pm)
 
-(Hints: `hour_of_day` is on a 24 clock, to capture all the observations, make the first `breaks` value strictly less than 0).
+(Hints: `hour_of_day` is on a 24 clock. To capture all the observations, make the first `breaks` value strictly less than 0).
 
 Using `group_by` and `summarize`, find the most common period of the day for a crime to occur.
 
