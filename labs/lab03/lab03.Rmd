@@ -174,6 +174,7 @@ midwest |>
 `mutate()` can be used to either create or modify a column in a dataset. 
 We can pipe multiple functions together. 
 
+Try running the following code:
 ```{r mutate1, exercise=TRUE}
 midwest %>%
   filter(state == 'MI') %>%
@@ -181,6 +182,30 @@ midwest %>%
   mutate(county == tolower(county)) %>%
   select(state, county, school) %>%
   tail()
+```
+
+Create a new column finds the number of non-adults per county (i.e., the difference between `poptotal` and `popadults`):
+
+```{r mutate2, exercise=TRUE}
+```
+
+```{r mutate2-solution}
+midwest |>
+  mutate(children = poptotal - popadults) |>
+  select(children)
+```
+
+Mutate can make more than one column. Using only one call to `mutate`, create a `childrendensity` by dividing the number of children by area.
+
+
+```{r mutate3, exercise=TRUE}
+```
+
+```{r mutate3-solution}
+midwest |>
+  mutate(children = poptotal - popadults,
+         childrendesnity = children / area) |>
+  select(children, childrendesnity)
 ```
 
 We can use `arrange()` to order the columns of the data. 
@@ -192,24 +217,46 @@ midwest %>%
   head()
 ```
 
+Find the county with the highest population (`poptotal`) in the data set:
+
+```{r arrange2, exercise=TRUE}
+
+```
+
+```{r arrange2-solution}
+midwest %>%
+  arrange(desc(poptotal)) |>
+  head(1)
+```
+
 Another useful tool is `slice()`. This function allows us to select certain rows. There are a few versions of this that each give different results. See `?slice` for more details.
+
+The previous example could have been written as:
 
 ```{r slice1, exercise=TRUE}
 midwest %>%
-  select(state, county, poptotal) %>%
-  filter(state == "MI") %>%
   slice_max(poptotal)
 ```
 
-## `group_by()` and `summarize()` (1-2 slides)
+## `group_by()` and `summarize()` 
 
-`group_by()` helps us great groups. 
-The following code will get the maximum population for each state in the dataset. 
+`group_by()` helps us create groups. 
+The following code will get the maximum population county for each state in the dataset. 
 
 ```{r groupby1, exercise=TRUE}
 midwest %>%
-  select(state, county, poptotal) %>%
   group_by(state) %>%
+  slice_max(poptotal)
+```
+
+Use `group_by` and `slice_max` to find the largest metro and non-metro counties (`inmetro`):
+
+```{r groupbymetro, exercise=TRUE}
+```
+
+```{r groupbymetro-solution}
+midwest %>%
+  group_by(inmetro) %>%
   slice_max(poptotal)
 ```
 
@@ -223,29 +270,26 @@ midwest %>%
   arrange(-n_counties)
 ```
 
-## `group_by()` and `summarize()` Exercise.
 
-**Exercise**
-
-Use `group_by()` and `summarize()` to get the total population in each state. 
+Use `group_by()` and `summarize()` to get the total population in each state (hint, we want to *sum* up the `poptotal` column)
+. 
 Then, arrange the states so that states with the smallest population comes first.
 
 ```{r groupExercise, exercise=TRUE}
-midwest
 ```
 
+```{r groupExercise-solution}
+midwest |>
+  group_by(state) |>
+  summarize(state_pop = sum(poptotal)) |>
+  arrange(desc(state_pop))
+```
 **BONUS** Modify your previous solution to also calculate the percentage of the population that is White, Black, and Asian. 
 
-## `group_by()` and `summarize()` Solution
-
-```{r}
-midwest %>%
-  group_by(state) %>%
-  summarize(state_population = sum(poptotal)) %>%
-  arrange(state_population)
+```{r groupExercisebonus, exercise=TRUE}
 ```
 
-```{r}
+```{r groupExercisebonus-solution}
 midwest %>%
   group_by(state) %>%
   summarize(state_population = sum(poptotal),
@@ -255,11 +299,4 @@ midwest %>%
   arrange(state_population)
 ```
 
-Another possibility is to do all columns that start with *pop* at the same time: 
-
-```{r}
-midwest %>%
-  group_by(state) %>%
-  summarize(across(starts_with("pop"), ~ sum(.) / sum(poptotal)))
-```
 
