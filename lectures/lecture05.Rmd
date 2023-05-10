@@ -16,7 +16,7 @@ library(lubridate) # install.packages("lubridate") if you don't have this
 ```
 
 
-## Tables: lists of vecotrs
+## Tables: lists of vectors
 
 Review:
 
@@ -164,6 +164,7 @@ new_df <- mutate(df, new_column = f(x, y))
 ## Mutate creates new tables
 
 ```{r}
+aatemp <- read_csv("data/ann_arbor_weather.csv.gz")
 dim(aatemp)
 aatemp2 <- mutate(aatemp, tdiff = c(NA, diff(TMAX)))
 dim(aatemp)
