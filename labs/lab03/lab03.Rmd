@@ -2,7 +2,8 @@
 title: "Stats 306: Lab 3"
 subtitle: "Working with tables"
 author: "Your Name"
-output: html_document
+
+runtime: shiny_prerendered
 ---
 
 ## Set up
@@ -14,6 +15,7 @@ output: html_document
 
 ```{r setup, echo=TRUE}
 library(tidyverse)  # For ggplot2, dplyr
+library(learnr)
 ```
 
 
@@ -44,64 +46,128 @@ We are going to look at the `midwest` data again.
 head(midwest)
 ```
 
-`select()` let's us select, or deselect, columns of interest
+### `select`
+
+It you might like to have the help file for the select function open. Run
+
+```{r eval = FALSE}
+?select
+```
+
+in the Console tab.
+
+
+Use `select` to pick the columns that are related to population counts:
+
+```
+"poptotal"        "popdensity"      "popwhite"        "popblack"        "popamerindian"  
+"popasian"        "popother"        "popadults"       "poppovertyknown"
+```
 
 ```{r midwestSelect1, exercise=TRUE}
-midwest %>%
-  select(popwhite, popwhite) %>%
-  head()
+
 ```
+
+```{r midwestSelect1-solution}
+select(midwest, poptotal, popdensity, popwhite, popblack, popamerindian,  
+         popasian, popother, popadults, poppovertyknown) 
+```
+
+Select everything **except** `PID` and `poptotal`:
 
 ```{r midwestSelect2, exercise=TRUE}
+```
+```{r midwestSelect2-solution}
 midwest %>%
-  select(-PID, -poptotal) %>%
-  head()
+  select(-PID, -poptotal) 
 ```
 
-We can also select by condition: 
+Use the `where` and `is.character` function to select only columns containing strings/character vectors.
 
 ```{r midwestSelect3, exercise=TRUE}
+```
+
+```{r midwestSelect3-solution}
 midwest %>%
   select(where(is.character)) %>%
   head()
 ```
 
+
+### `filter`
 `filter()` allows us to select certain rows. 
 
-```{r midwestFilter1, exercise=TRUE}
-midwest %>%
-  filter(state == 'MI') %>%
-  head()
+Observe the following way to tell if a county is in Michigan:
+
+```{r}
+midwest$state == "MI"
 ```
 
-You can include more than one condition at a time: 
+Use code similar (but not the same as) the above to find all rows for counties in MI
+
+```{r midwestFilter1, exercise=TRUE}
+```
+```{r midwestFilter1-solution}
+midwest %>%
+  filter(state == 'MI')
+```
+
+You can include more than one condition at a time by adding additional qualifications. Select all counties in Michigan with a `percollege` value greater than 17 (approximately the median in the entire data set)
 
 ```{r midwestFilter2, exercise=TRUE}
 midwest %>%
   filter(state == "MI", county == 'WASHTENAW')
 ```
 
-**Exercise**: Subset the `midwest` data so that you only have data from the states of Wisconsin and Ohio, and only have the columns: `state`, `popdensity`, `inmetro`, and `percollege`. 
-
-```{r midwestExercise1, exercise=TRUE}
-midwest
+```{r midwestFilter2-solution}
+midwest %>%
+  filter(state == "MI", percollege > 16)
 ```
 
-## `filter` and `select` Solution
+Another way to do this filter is to use the "and" operator `&`
 
-There are a few possible solutions. 
-Here are two: 
-
-```{r midwestSolution1}
+```{r}
 midwest %>%
-  filter(state %in% c("WI", "OH")) %>%
-  select(state, popdensity, inmetro, percollege)
+  filter(state == "MI" & percollege > 16)
 ```
 
-```{r midwestSolution2}
-midwest %>%
-  filter(state == "WI" | state == "OH") %>%
-  select(state, popdensity, inmetro, percollege)
+There is also an "or" operator `|`. Use the `|` operator to find rows in either Wisconsin or Ohio.
+
+```{r midwestOrOperator, exercise=TRUE}
+```
+
+```{r midwestOrOperator-solution}
+midwest |>
+  filter(state == "WI" | state == "OH")
+```
+
+When filtering rows for many values in the same column, the `%in%` operator can be useful. Here's an example of it's usage
+
+```{r}
+c("WI", "MI", "OH", "OH", "IA") %in% c("WI", "OH")
+```
+
+Use the `%in%` operator to repeat the previous selection of counties in Wisconsin or Ohio.
+
+```{r midwestinoperator, exercise=TRUE}
+```
+
+```{r midwestinoperator-solution}
+midwest |>
+  filter(state %in% c("WI", "OH"))
+```
+
+### Putting `filter` and `select` together
+
+Make a table using all the rows from Wisconsin and Ohio but only the columns `PID` and `area`
+
+```{r midwestfilterselect, exercise = TRUE}
+```
+
+```{r midwestfilterselect-solution}
+midwest |>
+  filter(state %in% c("WI", "OH")) |>
+  select(PID, area)
 ```
 
 ## Mutate
