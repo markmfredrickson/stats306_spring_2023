@@ -1,6 +1,6 @@
 ---
 title: "Stats 306: Lecture 5"
-subtitle: "Tables: Grouping and Summaries"
+subtitle: "Tables: Selecting, Filtering; Grouping and Summaries"
 author: "Mark Fredrickson"
 output: 
   learnr::tutorial:
@@ -9,12 +9,23 @@ output:
 runtime: shiny_prerendered
 ---
 
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(lubridate) # install.packages("lubridate") if you don't have this
+```
+
 
 ## Tables: lists of vecotrs
 
-Recall, we want to have a good data format for **samples** of **units**, measured on **variables**.
+Review:
 
+* Samples: collections of $n$ units
+* Variables: $k$ measurements common to all units
+* Tables ($n \times k$): units on rows, variables on columns
+* Conceptual table implementation: lists of length $k$ composed of vectors of length $n$
 
+Example:
 ```{r}
 x <- 1:10
 y <- 100:109
@@ -25,7 +36,7 @@ d
 d$column_x
 ```
 
-## Data formats: better types
+## Better tables: `data.frame` and `tibble`
 
 A list of vectors could not guarantee they are all the same length. Instead we use **`data.frame`** and **`tibble`**.
 
@@ -36,14 +47,14 @@ d3 <- as_tibble(d2)
 d3
 ```
 
-## Common operations on tables
+## Common operations on tables (overview)
 
 * Pulling out a single column: `d$col`
 * Creating a single column: `d$newcol <- EXPR`
 * Pulling out several columns: `select(d, col1, col2)` (and several other forms)
-* Creating new column (in new table): `mutate(d, newcol = f(col1, col2))`
-* Pulling out rows: `filter(d, criteria)`
-* Grouping and summarizing `group_by(d, discrete_column) |> summarize(new_name = a_function(col))`
+* Pulling out rows: `filter(d, criterion1, criterion2)`
+* Creating new columns (in new table): `mutate(d, newcol = f(col1, col2), newcol2 = g(col3, newcol))`
+* Grouping and summarizing `group_by(d, discrete_column) |> summarize(new_name = f(col))`
 
 ## Getting and setting columns (one at a time)
 
@@ -79,7 +90,15 @@ Get only "character" type columns:
 select(d3, where(is.character)) |> head(2)
 ```
 
-Later, we'll introduce writing our own functions and see other things we can use instead of things like `is.character`.
+## 'is' functions for columns
+
+* `is.character`: strings/character vectors
+* `is.numeric`: number/numeric
+* `is.factor`: factor/categories
+* `is.logical`: logical/boolean
+* `is.double`, `is.integer`: decimal and integer numeric types, respectively
+
+When we start to write our own functions, we'll be able to create many more
 
 ## Grabbing rows by index
 
@@ -126,32 +145,6 @@ head(mpg, 1)
 
 ```
 
-## Next time
-
-* Grouping
-* Summarizing
-* Creating new columns
-* Writing our own functions
-* R for DS: 5.6 - 5.7, 19.1 - 19.2
-```{r setup, include=FALSE}
-library(learnr)
-library(tidyverse)
-library(lubridate) # install.packages("lubridate") if you don't have this
-```
-
-
-## Exercise
-
-Combine `filter` and `select` to get only the columns `cty` and `hwy` for cars that have more than 4 cylinders.
-
-```{r}
-head(mpg, 1)
-```
-
-```{r filter-select, exercise = TRUE}
-
-```
- 
 ## Tasks
 * Creating new column (in new table): `mutate(d, newcol = f(col1, col2))`
 * Grouping and summarizing `group_by(d, discrete_column) |> summarize(new_name = a_function(col))`
@@ -208,7 +201,7 @@ ggplot(aatemp3, aes(x = z)) + geom_histogram()
 
 We may want to create new values using a condition. The `if_else` and function can help:
 ```{r}
-if_else(c(T, F, F), c("aT", "bT", "cT"), c("aF", "bF", "cF"))
+if_else(c(TRUE, FALSE, FALSE), c("aT", "bT", "cT"), c("aF", "bF", "cF"))
 ```
 
 R will also "recycle" values, so we can pass in single value that will get repeated:
