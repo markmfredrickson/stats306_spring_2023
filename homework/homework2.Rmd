@@ -118,7 +118,7 @@ Next, we need to create a bounding box for our data. Use `summarize` to find the
 
 ```{r eval = FALSE}
 bbox <- SUMMARIZE_HERE |> as.numeric()
-detroit_map <- get_map(bbox, zoom = 11, maptype = "roadmap")
+detroit_map <- get_map(bbox, zoom = 11, maptype = "terrain", source = "stamen")
 ggmap(detroit_map) + geom_point(data = homicide, mapping = aes(x = longitude, y = latitude))
 ```
 
