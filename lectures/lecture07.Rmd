@@ -17,24 +17,135 @@ library(lubridate) # install.packages("lubridate") if you don't have this
 aatemp <- read_csv("data/ann_arbor_weather.csv.gz")
 ```
 
-## Review: `groupby` and `summarize`
+## Using functions
 
-* Use `groupby` to **partition** tables into groups
-* Use `summarize` to compute **within group statistics**(e.g., conditional means)
-* Useful functions to know about: `any`, `all`, `n`, `n_distinct`
-* Interaction of `mutate` with `summarize`
-
-## Review: creating functions
-
-* Functions are variables like any other in R
-* General syntax: `fname <- function(required, optional = 123) { # fn body }`
-* Return will end a function and supply a value
-* Last line of function is automatic return value
-
-## Temperature data for Ann Arbor, MI
+So far we have been using functions (sometimes called operators):
 
 ```{r}
-aatemp
+aatemp |>
+  mutate(TRANGE = TMAX - TMIN) |>
+  summarize(
+          any(is.na(TMAX)),
+          mean(TRANGE))
+```
+
+## Functions: mini-programs
+
+We can write our own functions. Functions are miniature programs that take inputs and return a value.
+
+* Reuse the same set of steps in different contexts (variables, data sets)
+* Express key steps that should be done performed later (delayed computation)
+
+## Avoding repetition: groups
+
+If we want to repeat the same computation within groups we can avoid repetition (always our goal!) using `group_by`:
+
+```{r}
+aatemp |>
+  group_by(year(DATE)) |>
+  summarize(mean(TMAX - TMIN))
+```
+
+## Correlation
+
+In the previous grouping example, we used the same variables in each group to make our computation. Sometimes we want to repeat the same computation on different variables.
+
+One way of defining the *correlation coefficient* for two variables is as:
+$$r_{xy} = \frac{1}{n - 1} \sum_{i=1}^n \frac{x_i - \bar x}{s_x} \frac{y_i - \bar x}{s_y}$$
+In other words, *the average product of Z-scores*
+
+```{r}
+aatemp |>
+  mutate(zx = (TMAX - mean(TMAX)) / sd(TMAX),
+         zy = (TMIN - mean(TMIN)) / sd(TMIN),
+         zz = zx * zy) |>
+  summarize(sum(zz) / (length(zz) - 1))
+
+# validate
+summarize(aatemp, cor(TMAX, TMIN))
+```
+
+But lots of duplication!
+
+## Writing our own functions
+
+```{r eval = F}
+function_name <- function(required_argument, optional_argument = 0, ...) {
+  # function body
+  return(a_value)
+}
+```
+
+(NB: The last line is automatically returned.)
+
+## Exercise
+
+Write an R function to transform a vector into a $Z$-score
+```{r scale, exercise = TRUE}
+x <- c(-1, 2, 1.1)
+```
+
+```{r scale-solution}
+z_score <- function(input) {
+  (input - mean(input)) / sd(input)
+}
+
+z_score(x)
+```
+
+
+(NB: this function is called `scale` in R)
+
+## Revisiting correlation:
+
+```{r}
+
+z_score <- function(input) {
+  (input - mean(input)) / sd(input)
+}
+
+aatemp |>
+  mutate(zx = z_score(TMAX),
+         zy = z_score(TMIN),
+         zz = zx * zy) |>
+  summarize(sum(zz) / (length(zz) - 1))
+```
+
+
+## Common use case: mutations and summaries
+
+Suppose we want to median center and scale in terms of the IQR. We are going to use this functionality on the original data, but also within years.
+
+```{r}
+myscale <- function(x) {
+  (x - median(x)) / IQR(x)
+}
+```
+```{r}
+mutate(aatemp, TMAX_myscale = myscale(TMAX)) |>
+  ggplot(aes(x = factor(year(DATE)), y = TMAX_myscale)) +
+    geom_violin()
+```
+
+```{r}
+aat_year <- group_by(aatemp, year(DATE))
+summarize(aat_year, myscale(TMAX)) |>
+  ggplot(aes(x = factor(`year(DATE)`), y = `myscale(TMAX)`)) +
+    geom_violin()
+```
+
+## Exericse: Converting all Fahrenheit to Celsius
+
+We have both `TMAX` and `TMIN` in Fahrenheit.
+
+```{r}
+select(aatemp, TMAX, TMIN)
+```
+
+Let's convert to Celsius ($C = (F - 32) \cdot 5/9$) by first creating a function.
+
+```{r celsius, exercise = TRUE}
+
 ```
 
 ## From duplicated code to clean code
@@ -105,12 +216,12 @@ Write a function to compute the coefficient of skew and use `summarize_at` to co
 
 ```
 
-## Plot of `TMAX` and `TMIN`
+```{r coefskew-solution}
+skew <- function(x) {
+   mean((x - mean(x))^3) / sd(x)^3
+}
 
-```{r}
-tall_temp <- select(aatemp, TMAX, TMIN) |> pivot_longer(c("TMAX", "TMIN"))
-tall_temp
-ggplot(tall_temp, aes(x = value, fill = name)) + geom_density(alpha = 0.5)
+summarize_at(aatemp, c("TMAX", "TMIN"), skew)
 ```
 
 ## Return values
@@ -236,7 +347,15 @@ Make the default argument be `mean`, but demonstrate using `median` centering as
 myvec <- c(203404, 292, 1010, 3, -10930, 39)
 ```
 
+```{r higher-order-soultion}
+myvec <- c(203404, 292, 1010, 3, -10930, 39)
 
-## Next time
+center <- function(x, f = mean) {
+  x - f(x)
+}
 
->* R for Data Science 7 - 7.8
+center(myvec)
+center(myvec, mean)
+center(myvec, f = median)
+```
+
