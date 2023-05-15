@@ -302,8 +302,8 @@ How many players had at least as many hits as Bonds had HRs?
 
 ```{r}
 group_by(Batting, playerID) |>
-  summarize_at(c("H"), sum) |>
-  transmute_at(c("H", "H"), ~(.x > bb_hr)) |>
+  summarize(H = sum(H)) |>
+  transmute_at(c("H"), ~(.x > bb_hr)) |>
   summarize_all(mean)
 ```
 
@@ -315,3 +315,21 @@ tmp <- group_by(Batting, playerID) |>
 ggplot(tmp, aes(x = H)) + geom_histogram() + geom_vline(xintercept = bb_hr)
 ```
 
+## Exercise
+
+Which columns contain a value greater than 100?
+
+To find out, first, select only non-factor columns (`is.factor` will be helpful), then select the columns that have a value of at least 100 somewhere in column. Use `colnames()` to list the column names.
+
+Then find the opposite. What columns do not have values greater than 100? Has anyone ever been hit by pitches more than 100 times in a season (column HBP)
+
+```{r selectexercise, exercise = TRUE}
+
+```
+
+```{r selectexercise-solution}
+select(Batting, where(~ !is.factor(.x))) |> select(where(~ max(.x, na.rm = TRUE) > 100)) |> colnames()
+
+select(Batting, where(~ !is.factor(.x))) |> select(where(~ max(.x, na.rm = TRUE) <= 100)) |> colnames()
+
+```
