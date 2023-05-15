@@ -17,103 +17,10 @@ library(lubridate) # install.packages("lubridate") if you don't have this
 library(Lahman) # install.packages("Lahman") if you don't have this
 ```
 
-## Review
 
-* Variable number of arguments with `...`
-  * Useful for passing all arguments to another function ("wrapping")
-  * Optional arguments when functions are arguments (e.g., `mutate_all`)
-* Conditional program flow with `if`, `else`, `return`
 
-## Lahman data
 
-```{r}
-library(Lahman)
-colnames(Batting)
-```
 
-## Environments and functions
-
-An **environment** in R is all defined variables and their values (we can think of it like a list). 
-
-You have a **global** environment for your R session, and R packages and functions have their own environments.
-
-```{r}
-x <- 3
-f <- function(y) {
-  x <- 2
-  y + x
-}
-f(2)
-
-```
-
-## Lexical scoping
-
-Environments are **nested**. If we request a variable not in the current environment, we go up the chain. We call this lexical scoping.
-
-```{r}
-
-x <- 3
-f <- function(y) {
-  y + x
-}
-f(2)
-```
-
-## Why is this useful?
-
-This can be convenient if we want to calculate a quantity and then re-use it when summarizing or mutating.
-
-Barry Bonds has hit the most homeruns. 
-```{r}
-filter(Batting, playerID == "bondsba01") |>
-  group_by(playerID) |>
-  summarize(sum(HR)) |> 
-  select(`sum(HR)`) |> first() -> bb_hr
-bb_hr
-```
-
-How many players hit at least as many triples or doubles as Bonds hit HRs?
-```{r}
-group_by(Batting, playerID) |>
-  summarize_at(c("X2B", "X3B"), sum) |>
-  mutate_at(c("X2B", "X3B"), ~(.x > bb_hr)) |>
-  summarize_at(c("X2B", "X3B"), mean)
-```
-
-How many players had at least as many hits as Bonds had HRs?
-
-```{r}
-group_by(Batting, playerID) |>
-  summarize_at(c("H"), sum) |>
-  mutate_at(c("H"), ~(.x > bb_hr)) |>
-  summarize_at('H', mean)
-```
-
-## Plotting hits
-
-```{r}
-tmp <- group_by(Batting, playerID) |>
-  summarize_at(c("H"), sum) 
-ggplot(tmp, aes(x = H)) + geom_histogram() + geom_vline(xintercept = bb_hr)
-```
-
-## From last lecture: Very high level review for the midterm
-
->* Goal: Exploration and analysis of tabular data.
->* Programming style (one): talk about columns of data (measurement), not rows of data as much as possible
->  * Model of data: List of vectors of same length
->  * `ggplot`: Map columns to visual elements, place using geometries and summaries
->  * `filter/select/mutate/groupby/summarize`
->* Programming style (two): Don't Repeat Yourself (DRY)
->  * Create new variables/columns to avoid duplication
->  * Functions
->    * Capture common code
->    * Work with `select` or `summarize_at` like functions
->* Other aspects of data science
->  * Repeatable analysis (RMarkdown)
->  * Integrated tool chain (RStudio)
->  * Working with others (git)
 
 ## Statistics and Data Science Workflow
 
