@@ -212,19 +212,19 @@ If there is only one unit in the sample, this estimator is undefined. Instead, l
 
 Write a function to estimate variance in this way. Demonstrate on a vector of size 1 and a longer vector. Use `var` in the case where $n > 1$.
 
-```{r}
+```{r} safevar, exercise = TRUE}
 
 ```
 
 ## Combining more than one condition
 
-We can use `&&` for "and" and `||` for "or". We can use `!` to negate.
+We can use `&` for "and" and `|` for "or". We can use `!` to negate.
 
 Here's an example where we can only set one option for a function:
 
 ```{r}
 food_order <- function(entree, side = NULL, dessert = NULL) {
-  if (!is.null(side) && !is.null(dessert)) {
+  if (!is.null(side) & !is.null(dessert)) {
     return("You may only order one side or dessert")
   } 
   
@@ -315,23 +315,3 @@ tmp <- group_by(Batting, playerID) |>
 ggplot(tmp, aes(x = H)) + geom_histogram() + geom_vline(xintercept = bb_hr)
 ```
 
-## Very high level review for the midterm
-
-* Goal: Exploration and analysis of tabular data.
-* Programming style (one): talk about columns of data (measurement), not rows of data as much as possible
-  * Model of data: Lists of vectors of same length
-  * `ggplot`: Map columns to visual elements, place using geometries and summaries
-  * `filter/select/mutate/groupby/summarize`
-* Programming style (two): Don't Repeat Yourself (DRY)
-  * Create new variables/columns to avoid duplication
-  * Functions
-    * Capture common code
-    * Work with `select` or `summarize_at` like functions
-* Other aspects of data science
-  * Repeatable analysis (RMarkdown)
-  * Integrated tool chain (RStudio)
-  * Working with others (git)
-
-## Next time
-
->* R for Data Science 7 - 7.8
