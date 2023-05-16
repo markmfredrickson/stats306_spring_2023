@@ -192,6 +192,7 @@ What is the proportion of players that have made more than 100 errors?
 ```
 
 How would you write this quantity in terms of the ECDF?
+
 ## Plotting the ECDF
 
 ```{r}
