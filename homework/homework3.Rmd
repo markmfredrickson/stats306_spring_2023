@@ -10,6 +10,8 @@ library(tidyverse)
 library(lubridate)
 ```
 
+*All sub-questions worth one point each.*
+
 ## Question 1
 
 Let's look at some water quality data from the Backbay National Wildlife Refuge:
@@ -77,17 +79,19 @@ the multiple clusters we saw in the water temp?
 
 ### Q 3.1
 
-Create plots of the distributions of `Site_Id` and `Water Depth (m)` (separately). What kinds of data (quantitative, ordinal, nominal) are these two measurements?
+Consider the variables `Site_Id`,  `Water Depth (m)`, and `Salinity (ppt)`. What kinds of data (quantitative, ordinal, nominal) are these three measurements? Create an appropriate plot of each variable's **marginal distribution**.
 
 ### Q 3.2
 
-Do you think either of these measurements would benefit from a logarithmic transformation? Implement this transformation and update the plot(s).
-
-Did you get any warnings? What happened?
+Create a plot that shows the **conditional distributions** of one variable given another (you may select which pair of variables you use).
 
 ### Q 3.3
 
-Create a plot to show the two variables from 3.1 on one plot. Clearly state if this plot shows the **joint distribution** or a set of **conditional distributions**. Describe the plot and if you see any sites with particularly unusual water levels.
+Create a plot that shows the **joint distribution** of two variables (you may select which pair you use).
+
+### Q 3.4
+
+Create a plot that shows the **conditional mean** of one variable given another (you may select which pair you use).
 
 
 ## Question 4
@@ -104,7 +108,9 @@ Convert the result of 4.1 to a tibble. Demonstrate by printing out the result.
 
 ### Q 4.3
 
-Create two tibbles to recreate the first 4 rows of the table of lectures and topics on our [Syllabus page](https://umich.instructure.com/courses/554168/assignments/syllabus). In the first, use `tibble`. For the second, use `tribble`.
+Create two tibbles to recreate the first 4 rows of the table of [municipalities in Michigan](https://en.wikipedia.org/wiki/List_of_municipalities_in_Michigan) sorted by name (this should be the default, by you can ensure it by clicking on the "Name" column). Include only the Name, County, Population (2020), and Land Area (2010) km$^2$. 
+
+In the first, use `tibble`. For the second, use `tribble`.
 
 ### Q 4.4
 
