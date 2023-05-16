@@ -1,7 +1,6 @@
 ---
-title: "Stats 306, Fall 2022, Homework 2"
+title: "Stats 306, Homework 3"
 author: "Your Name, Your Uniqname"
-date: "Due October 2, 11:59PM EST"
 output: html_document
 ---
 
@@ -70,7 +69,9 @@ head(bbwater$Read_Date)
 
 ### Q 2.4
 
-Now use the `month` function to extra the month from each date. Create a facet plot of histograms of the water temp broken out by month. Does this help explain the multiple clusters we saw in the water temp?
+Now use the `month` function to extract the month from each date. Create a facet
+plot of histograms of the water temp broken out by month. Does this help explain
+the multiple clusters we saw in the water temp?
 
 ## Question 3
 
