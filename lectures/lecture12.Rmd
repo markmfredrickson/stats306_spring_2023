@@ -126,7 +126,9 @@ csv <- '
 ```
 >* [`read_csv`](https://readr.tidyverse.org/reference/read_delim.html)
 >* [`cols`](https://readr.tidyverse.org/reference/cols.html)
+
 ## Saving data
+
 
 There are complementary `write_csv` and `write_delim` functions.
 
@@ -238,7 +240,7 @@ right_now + weeks(7)
 After doing math, you might want to convert the units.
 
 ```{r}
-semester_end <- dmy_hms("16122022 23:59:59") - now()
+semester_end <- dmy_hms("23062023 23:59:59") - now()
 
 (sed <- as.duration(semester_end))
 
@@ -258,22 +260,46 @@ In the previous we did not really distinguish between three different classes of
 >* Durations: differences in seconds
 >* Periods: differences that are more human readble ("two months", which months?)
 
-We'll leave further exploration as personal exploration.
+We'll leave them for further personal exploration.
 
 ## Exercise
 
 Parse these dates.
 
-If you wanted to set a reminder one month before each of these dates, when would the reminders be?
-
-hat's the range of the dates? What is the mean date? What is the median date? 
+* What's the range of the dates? 
+* What is the mean date?
+* What is the median date? 
+* Suppose you want reminders of the anniversary of these dates in the coming year one month in advance. Find the dates of the reminders.
 
 ```{r diffex, exercise = TRUE}
 ds <- c("1981-09-25", "1982-03-06", "2010-12-14", "2012-10-18", "2019-04-03")
 ```
 
-## Next time
+```{r diffex-solution}
+ds <- c("1981-09-25", "1982-03-06", "2010-12-14", "2012-10-18", "2019-04-03")
 
-R4DS: 12, 13
+# parse as year-month-day format
+ds_parsed <- ymd(ds)
 
+# range
+range(ds_parsed)
+# or
+min(ds_parsed)
+max(ds_parsed)
+
+# mean and median
+mean(ds_parsed)
+median(ds_parsed)
+
+# setting reminders
+## method 1
+year_diff <- year(today()) - year(ds_parsed)
+ds_this_year <- ds_parsed + years(year_diff) - months(1)
+if_else(ds_this_year < today(), ds_this_year + years(1), ds_this_year) 
+
+## method 2
+ds_parsed_2 <- ds_parsed - months(1)
+year(ds_parsed_2) <- year(today())
+ds_parsed_2 + if_else(ds_parsed_2 < today(), years(1),  years(0))
+```
 
