@@ -1,0 +1,40 @@
+---
+title: "Project 1"
+author: "Your Name, Your Uniqname"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+```
+
+## Overview
+
+In the `data` directory of our repository you will find the file `natural_gas_germany_daily.csv`. These data come from a paper published in *Nature Energy* titled [Natural gas savings in Germany during the 2022 energy crisis](https://www.nature.com/articles/s41560-023-01260-5).
+
+## Tasks
+
+* Your first task is to load two files. To work in the console, use the `Session -> Set Working Directory -> To Source File Location`. 
+    * Call the first table `daily`: "../../data/natural_gas_germany_daily.csv"
+    * Call the second table `gas`: "../../data/dutch_ttf_natural_gas.csv". Be sure to properly import the `Date` column.
+* The data in `daily` are collected over days, with information on different types of natural gas consumption (`consumption_small`, `consumption_industry`, `consumption_power`). Provide summaries of typical values for each of these three types of consumption. Consider if you can use pivoting to provide an elegant solution to summarizing these data.
+* Answer some questions about the data in `daily`:
+   * How many weeks of data are contained in the data set?
+   * How much did consumption as a percentage change for each category?
+   * What proportion of the data are during holidays?
+   * Which month 
+* The original paper aggregated the data to monthly means for each consumption type in `daily` and the `Price` column of `gas` to produce the following image:<br/>
+![Original consumption by month graph](proj1fig1.png)<br/>
+Reproduce this figure. You do not have both scales or the vertical bars indicating years.
+* Produce at least four more figures. For each figure, write a brief caption explaining the plot and what you have learned from the plot.
+    * A marginal distribution
+    * A joint distribution
+    * A plot of a summary measure such as a conditional mean
+    * A plot using `facet_wrap` or `facet_grid`
+* Compare and contrast holidays and non-holidays for household energy consumption. Select several ways of comparing these groups. Provide at least one graph.
+* According to the paper, the gas crisis occurred between September 2021 until October 2022. Compare this period with the periods before and after on household and industrial consumption. Write a paragraph explaining your findings.
+* Based on your exploration of the data, suggest three questions that could be asked from these data or additional data that you can imagine.
+
+    
