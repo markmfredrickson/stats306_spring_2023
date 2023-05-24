@@ -14,7 +14,6 @@ runtime: shiny_prerendered
 # not have.
 
 if (!require(nycflights13)) install.packages("nycflights13", repos = "http://cran.us.r-project.org")
-if (!packageVersion("learnr") == "0.11.1") install.packages("learnr", repos = "http://cran.us.r-project.org")
 ```
 
 ```{r setup, eval=TRUE, include=FALSE, message=FALSE, echo=FALSE}
