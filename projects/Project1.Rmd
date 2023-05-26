@@ -17,14 +17,14 @@ In the `data` directory of our repository you will find the file `natural_gas_ge
 ## Tasks
 
 * Your first task is to load two files. To work in the console, use the `Session -> Set Working Directory -> To Source File Location`. 
-    * Call the first table `daily`: "../../data/natural_gas_germany_daily.csv"
-    * Call the second table `gas`: "../../data/dutch_ttf_natural_gas.csv". Be sure to properly import the `Date` column.
+    * Call the first table `daily`: "../data/natural_gas_germany_daily.csv"
+    * Call the second table `gas`: "../data/dutch_ttf_natural_gas.csv". Be sure to properly import the `Date` column.
 * The data in `daily` are collected over days, with information on different types of natural gas consumption (`consumption_small`, `consumption_industry`, `consumption_power`). Provide summaries of typical values for each of these three types of consumption. Consider if you can use pivoting to provide an elegant solution to summarizing these data.
 * Answer some questions about the data in `daily`:
    * How many weeks of data are contained in the data set?
    * How much did consumption as a percentage change for each category?
    * What proportion of the data are during holidays?
-   * Which month 
+   * Which month (with January 2017 being distinct from January 2018, etc.) had the highest total consumption for the power production segment (`consumption_power`)?
 * The original paper aggregated the data to monthly means for each consumption type in `daily` and the `Price` column of `gas` to produce the following image:<br/>
 ![Original consumption by month graph](proj1fig1.png)<br/>
 Reproduce this figure. You do not have both scales or the vertical bars indicating years.
