@@ -204,7 +204,7 @@ starwars %>%
   group_by(species) %>%
   filter(n() > 1) %>%
   ggplot() +
-  geom_bar(mapping = aes(species))
+  geom_bar(mapping = aes(y = species))
 ```
 
 A histogram shows the distribution of a numerical variable. If the value is missing for an observation, then it can't be included. There's no way to tell which bin it should be included in since its value isn't known. By default, observations with a missing value are removed.
@@ -346,6 +346,16 @@ gapminder %>%
   ggplot() +
   geom_histogram(aes(x = gdpPercap, y = stat(density)), alpha = 0.3) +
   geom_density(aes(x = gdpPercap), color = "darkorange", size = 2)
+```
+
+
+```{r}
+colnames(gp2007)
+ggplot(gp2007, aes(x = gdpPercap)) + geom_histogram() + facet_wrap(~ continent) 
+```
+```{r}
+mutate(gp2007, pop_grp = cut(pop, breaks = quantile(pop, c(0.25, 0.5, 0.75, 1)))) |>
+  ggplot(aes(y = gdpPercap, x = pop_grp)) + geom_boxplot()
 ```
 
 ## Challenge 2

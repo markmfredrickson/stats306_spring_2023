@@ -61,7 +61,7 @@ mi_pop_tall <- pivot_longer(tmp, c("population_2010", "population_2000", "area_k
 
 ## "Tidy" data, wide data
 
-In this class we have focused on **tabular data**. Data organzied as **rows** and **columns**.
+In this class we have focused on **tabular data**. Data organized as **rows** and **columns**.
 
 If we have a sample of $n$ items and have measured $k$ features of each item, our usual representation is:
 
