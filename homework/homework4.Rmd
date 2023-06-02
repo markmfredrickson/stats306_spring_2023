@@ -71,11 +71,11 @@ if (!require(Lahman)) install.packages("Lahman", repos = "http://cran.us.r-proje
 
 ## Q 2.1
 
-The `People` table in the Lahman package has information on individual players. There are two columns that are strings (characters) by default, but actually have date information: `debut` (date of first game played) and `finalGame`(date of last game played, or last game of 2021 regular season -- not including playoffs). 
+The `People` table in the Lahman package has information on individual players. There are two columns that are strings (characters) by default, but actually have date information: `debut` (date of first game played) and `finalGame`(date of last game played). 
 
 Parse these dates into two new columns `debut_d` and `finalGame_d`.
 
-Group the data by `finalGame_d` and count the nunber of players with each date as a final game. Sort in descending order. What do you notice about the date 2021-10-03? What is the maximum `finalGame_d` in the data set? How would you explain this result?
+Group the data by `finalGame_d` and count the number of players with each date as a final game. Sort in descending order. What do you notice about the date 2022-10-05? What is the maximum `finalGame_d` in the data set? How would you explain this result?
 
 ## Q 2.2
 
@@ -85,7 +85,7 @@ Show a density plot of this new column in years (using  `time_length(career_leng
 
 # Q 2.3
 
-Write a function that takes a date and returns the decade. For example, on the input `c("1891-07-10", "1997-10-01")` should return `c(1890, 1990)`. (Hint see the `round` function and its use of negative rounding.)
+Write a function that takes a date and rounds to the nearest the decade. For example, on the input `c("1891-07-10", "1997-10-01")` should return `c(1890, 2000)`. (Hint see the `round` function and its use of negative rounding.)
 
 Compute the decade of each player's debut and plot a series of boxplots or violin plots of `career_length` by decade of debut. What trends do you notice? How do you explain the decrease in career length in recent years? (hint: what did you see in 2.1?)
 
@@ -93,7 +93,7 @@ Compute the decade of each player's debut and plot a series of boxplots or violi
 
 Filtering out the players with `NA`s for `debut_d` or `finalGame_d`. Which player has had the longest career? (Display the name along with the duration in years.) Look up this player on Wikipedia to learn how he had such a long career. Was he playing the entire time? With which other player did he perform comedy routines?
 
-For players continuing to play, we have a "censor" career length as we have not yet observed their total career, but such is the nature of time. Of players that have the maximum `finalGame_d`, which player has had the longest career? (Display the name and duration in years using the `time_length` function)
+For players continuing to play, we have a "censored" career length as we have not yet observed their total career, but such is the nature of time. Of players that have the maximum `finalGame_d`, which player has had the longest career? (Display the name and duration in years using the `time_length` function)
 
 
 ## Question 3
