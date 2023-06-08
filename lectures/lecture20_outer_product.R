@@ -1,3 +1,4 @@
+library(profvis)
 
 outer1 <- function(x, y) {
   result <- matrix(0, nrow = length(x), ncol = length(y))
