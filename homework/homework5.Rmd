@@ -1,7 +1,6 @@
 ---
-title: "Stats 306, Fall 2022, Homework 5"
+title: "Stats 306 Homework 5"
 author: "Your Name, Your Uniqname"
-date: "Due December 11, 11:59PM"
 output: html_document
 ---
 
@@ -220,11 +219,4 @@ Rewrite your solution to 2(c) using a parallel computation technique.
 
 ## Question 4
 
-Open up the file `homework5_shiny.R`. This file runs a Shiny app. Right now, the app just displays a plot of the number of retweets by party for the 115th Congress.
-
-Update the app to have a `textInput` where users can enter a hash tag. Make the plot display the number of times per year-month where the hash tag was used. Create a screen shot of your Shiny app displaying the trend line for the hash tag "#DACA" and include it in this document using an image tag:
-
-![Screenshot](homework5_shiny_screenshot.png)
-
-
-
+**REMOVED**
