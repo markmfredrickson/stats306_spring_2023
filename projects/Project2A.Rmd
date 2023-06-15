@@ -42,17 +42,20 @@ You should become familiar with the [codebook for the version of the survey we a
 
 Load each of the files listed above into a table (I suggest using `household`, `project`, etc., and further tasks will mention these tables by name). While loading the data, pay particular attention to the following:
 
-* Write a function that helps avoid duplication when importing these files. This will be important for the next points
+* Write a function that helps avoid duplication when importing these files. This will be important for the next points. You may want to write several functions and then combine them with an overal `import(path_to_table)` function.
 * We do not need to import all of the columns.
   * There are several columns of the form `JCOLUMN_NAME` where `COLUMN_NAME` is another column in the same table. These variables indicate if there was any imputation or editing of values. For our purposes we can ignore these columns. But there are also a few columns that start with "JOB" that are valid columns. 
   * There are lots of "weight" related columns that are important to get the sampling procedures correct, but we ill ignore. These have the string "REPW" in them.
   * **Write a regular expression to exclude columns that start with "J" but not "JOB"  which can be passed to the `col_select` argument to avoid importing these columns.**
-  * Since writing regular expression to *exclude* patterns is more difficult, use `select` with `-matches(...)` to exclude the `REPW` columns after importing them.
+  * Since writing regular expression to *exclude* patterns is more difficult, **use `select` with `-matches(...)` to exclude the `REPW` columns after importing them.**
+  * The files as written have patterns like "'2'" to indicate a category rather than the number two. Write a function that strips the leading and ending quote characters and converts the result to a numeric value (`as.numeric`).
+  * Write a regular expression that will match a single `'` followed by an optional "-" character, followed by 1 or more digits, followed by a final "'" character. For example, it should match `'5'` and `'-6'`. Use this pattern with `mutate_if` (see also `str_detect` and `all`) and your function from the previous point to change all of these character columns into numeric values.
+  * Several of the numeric variables use either -9 or -6 to indicate missing values. Write a function that will replace all values that are equal to either -9 or -6 with `NA`. Apply this function to any numeric columns in each table (again the `mutate_if` function can be helpful here).
 * Factor recode the following variables using the [information in the code book](https://www.census.gov/data-tools/demo/codebook/ahs/ahsdict.html?s_year=2021%20National&s_availability=PUF&s_topic=E0AA57E845AE1B91C75756117388E28B,06C81761722C76EAD104E2317FDBE578,51A3CC29CDA4C84CFECDCE480B3A96F4,CF2CB01171BA8F3AEFD71BEBB3E5EBCE,2512DFBC4BA54E4C60D6AEAB81BC32A6). 
   * `household`: `BLD`, `BATHROOMS`, `REGION`, `HOA` (true/false)
   * `person`: `RACE`
   * `mortgage`: `LOANTYPE`
-* Several of the numeric variables use either -9 or -6 to indicate missing values. Write a function that will replace all values that are equal to either -9 or -6 with `NA`. Apply this function to any numeric columns in each table (the `mutate_if` function can be helpful here).
+
 
 ```{r import_data, cache = TRUE}
 ## import data here
