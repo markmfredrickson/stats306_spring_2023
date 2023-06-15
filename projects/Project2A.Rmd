@@ -1,0 +1,127 @@
+---
+title: "Project 2: American Housing Survey"
+author: "Your Name, Your Uniqname"
+date: "Due 2023-06-23 at 6pm"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+```
+
+## The American Housing Survey
+
+The American Housing Survey is a regular survey conducted by the US Census in coordination with the US Department of Housing and Urban Development that asks questions about housing and affordability. Here is what the US Census says about the AHS:
+
+> The American Housing Survey (AHS) is sponsored by the Department of Housing and Urban Development (HUD) and conducted by the U.S. Census Bureau. The survey has been the most comprehensive national housing survey in the United States since its inception in 1973, providing current information on the size, composition, and quality of the nation’s housing and measuring changes in our housing stock as it ages. The AHS is a longitudinal housing unit survey conducted biennially in odd-numbered years, with samples redrawn in 1985 and 2015 .
+>
+> The survey provides up-to-date information about the quality and cost of housing in the United States and major metropolitan areas. The survey also includes questions about:
+>
+> * the physical condition of homes and neighborhoods,
+> * the costs of financing and maintaining homes, and
+> * the characteristics of people who live in these homes.
+> * Planners, policy makers, and community stakeholders use the results of the AHS to assess the housing needs of communities and the country.  These statistics inform decisions that affect the housing opportunities for people of all income levels, ages, and racial and ethnic groups.
+>
+> Since our country changes rapidly, policymakers in government and private organizations need current housing information to make decisions about programs that will affect people of all income levels, ages, and racial and ethnic groups.
+
+In this project, we will use the 2021 **Public Use Files**. These files strip identifying information from the respondents, including location information such as the state or city. The data are also broken up into four individual files.
+
+* `../data/ahs_2021/household.csv.gz`: The distinct households surveyed.
+* `../data/ahs_2021/person.csv.gz`: People living in the households (there may be more than one)
+* `../data/ahs_2021/mortgage.csv.gz`: Mortgage (loan) information, which does not apply to all households.
+* `../data/ahs_2021/project.csv.gz`: 
+
+You should become familiar with the [codebook for the version of the survey we are using](https://www.census.gov/data-tools/demo/codebook/ahs/ahsdict.html?s_year=2021%20National&s_availability=PUF). When you find variables, you can expand the description by pressing the `+` button and then clicking on the "Survey Year: 2021 National" option. Here is an example describing the variable that serves as the primary key for each table (each table has its own control number, one per row).
+
+![Looking up CONTROL variable](proj2_control.png)
+
+
+## Loading data
+
+Load each of the files listed above into a table (I suggest using `household`, `project`, etc., and further tasks will mention these tables by name). While loading the data, pay particular attention to the following:
+
+* Write a function that helps avoid duplication when importing these files. This will be important for the next points
+* We do not need to import all of the columns.
+  * There are several columns of the form `JCOLUMN_NAME` where `COLUMN_NAME` is another column in the same table. These variables indicate if there was any imputation or editing of values. For our purposes we can ignore these columns. But there are also a few columns that start with "JOB" that are valid columns. 
+  * There are lots of "weight" related columns that are important to get the sampling procedures correct, but we ill ignore. These have the string "REPW" in them.
+  * **Write a regular expression to exclude columns that start with "J" but not "JOB"  which can be passed to the `col_select` argument to avoid importing these columns.**
+  * Since writing regular expression to *exclude* patterns is more difficult, use `select` with `-matches(...)` to exclude the `REPW` columns after importing them.
+* Factor recode the following variables using the [information in the code book](https://www.census.gov/data-tools/demo/codebook/ahs/ahsdict.html?s_year=2021%20National&s_availability=PUF&s_topic=E0AA57E845AE1B91C75756117388E28B,06C81761722C76EAD104E2317FDBE578,51A3CC29CDA4C84CFECDCE480B3A96F4,CF2CB01171BA8F3AEFD71BEBB3E5EBCE,2512DFBC4BA54E4C60D6AEAB81BC32A6). 
+  * `household`: `BLD`, `BATHROOMS`, `REGION`, `HOA` (true/false)
+  * `person`: `RACE`
+  * `mortgage`: `LOANTYPE`
+* Several of the numeric variables use either -9 or -6 to indicate missing values. Write a function that will replace all values that are equal to either -9 or -6 with `NA`. Apply this function to any numeric columns in each table (the `mutate_if` function can be helpful here).
+
+```{r import_data, cache = TRUE}
+## import data here
+```
+
+## Exploring Household Data
+
+### Required
+
+* Provide a plot that shows the number of households in each `REGION`
+* Provide a plot of the marginal distribution of `YRBUILT` (hint: what kind of variable is this? See the codebook.)
+* Is the market value (`MARKETVAL`) typically higher for households that have a homeowner's association (HOA)?
+* Create a column that replaces `UNITSIZE` values with the midpoint of the range. How does the number of bedrooms change with larger homes?
+
+### Open Ended
+
+* Use `group_by` and `summarize` to investigate a variable not used as a grouping factor in the required sections above. Write up your findings in written form (3 to 5 sentences).
+* If you were looking for an affordable house, where would you choose to live? (Which region)? Define how you will define "affordable" and explain how will you choose to select a region using your measurement of affordability. Implement affordability using `mutate`. Compare the regions and explain your results.
+* Select two numeric variables not used above and investigate the relationship between the two. Use both graphical and numeric summaries. Write up your findings in a short paragraph.
+
+## Exploring Person Data
+
+### Required
+
+* Investigate the `PERSONID` variable. How is variable different from `CONTROL`? If you want to find out how many people live in a household, how can you do that? What is the maximum number of people living in a household in this data set?
+* For each household, find the minimum age, median age, and maximum age. Summarize the average of these three values. (Save the table of min, median, and max age for later).
+
+### Open Ended
+
+* The person table contains several categorical variables. Using grouping on more than variable to explore the relationships between these variables. For example, for each level of variable A, what is the most common value of variable B? Write up what you find.
+
+## Exploring Mortgage Data
+
+### Required
+
+* Can a single property have more than one mortgage?
+* Plot the marginal distribution of `PMTAMT` and interpret the results.
+* Plot the conditional distribution for the `AMMORT` (mortgage amount) for each of the `LOANTYPE` categories. Compare both typical values and variation. Write up a 2 or 3 sentences explaining your results.
+
+### Open Ended
+
+* Compare refinanced mortgages to non-refinanced mortgages (`REFI`). Include at least one plot.
+* Demonstrate the use of the filter function to limit attention to properties with more than one mortgage. For these properties, compare the different types of mortgages. For which types of loans do people carry the highest debt?
+
+## Using EDA Before Merging
+
+We have now investigated the three main tables individually. Use these results to help you formulate three questions that we can ask after merging the data in the next section. For each question, be sure to state why the previous results caused you to ask this question.
+
+## Merging Data
+
+### Merging Households and Mortgages
+
+Write a paragraph describing the difference between these ways of merging the `household` and `mortgages` table:
+
+- Use a left join on households (left) and mortgages (right) on the `CONTROL` column
+- Use an inner join on households (left) and mortgages (right) on the `CONTROL` column
+- First aggregate the `mortgages` table to get total mortgage amounts and payments, then just a left join households to the aggregated mortgages table.
+
+If we would want to compare mortgage amounts for primary, second, and HELOC loans for each region? Implement this solution and use a facet plot to show the distributions of primary, secondary, and HELOC loans by region.
+
+### Required
+
+* Using the merge in the previous step, plot the household income `FINCP` against the total mortgage amount. Comment on the results.
+* Using pivoting, create columns for the `AMMORT_primary`, `AMMORT_second`, and `AMMORT_heloc`. For mortgages with both primary and HELOC mortgages, plot the joint distribution of these values. You will probably need to group by `CONTROL` after pivoting to get totals.
+
+### Open Ended
+
+* Select another merge to make (household to person or person to mortgage, in any order).
+* Address one or more of your EDA questions from the previous sessions. Provide at least one plot and one use of either `group_by`/`summarize` or an iteration technique to address your question. 
+* Did you find an answer to your question or did it prompt new questions? Write up a short paragraph of your results.
+
+
