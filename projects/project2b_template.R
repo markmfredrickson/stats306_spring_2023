@@ -31,29 +31,24 @@ library(tidyverse)
 # this will load the table `homeproject` into the environment
 load("proj2_homeproj.rda")
 
-# Define UI for application that draws a histogram
 ui <- fluidPage(
 
     # Application title
     titlePanel("Project 2B Template"),
 
-    # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
           p("This is a placeholder")
         ),
 
-        # Show a plot of the generated distribution
         mainPanel(
            p("This is also a placeholder")
         )
     )
 )
 
-# Define server logic required to draw a histogram
 server <- function(input, output) {
   
 }
 
-# Run the application 
 shinyApp(ui = ui, server = server)
