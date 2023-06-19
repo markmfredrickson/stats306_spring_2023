@@ -52,7 +52,7 @@ Load each of the files listed above into a table (I suggest using `household`, `
   * Write a regular expression that will match a single `'` followed by an optional "-" character, followed by 1 or more digits, followed by a final "'" character. For example, it should match `'5'` and `'-6'`. Use this pattern with `mutate_if` (see also `str_detect` and `all`) and your function from the previous point to change all of these character columns into numeric values.
   * Several of the numeric variables use either -9 or -6 to indicate missing values. Write a function that will replace all values that are equal to either -9 or -6 with `NA`. Apply this function to any numeric columns in each table (again the `mutate_if` function can be helpful here).
 * Factor recode the following variables using the [information in the code book](https://www.census.gov/data-tools/demo/codebook/ahs/ahsdict.html?s_year=2021%20National&s_availability=PUF&s_topic=E0AA57E845AE1B91C75756117388E28B,06C81761722C76EAD104E2317FDBE578,51A3CC29CDA4C84CFECDCE480B3A96F4,CF2CB01171BA8F3AEFD71BEBB3E5EBCE,2512DFBC4BA54E4C60D6AEAB81BC32A6). 
-  * `household`: `BLD`, `BATHROOMS`, `REGION`, `HOA` (true/false)
+  * `household`: `BLD`, `BATHROOMS`, `DIVISION`, `HOA` (true/false)
   * `person`: `RACE`
   * `mortgage`: `LOANTYPE`
 
@@ -65,7 +65,7 @@ Load each of the files listed above into a table (I suggest using `household`, `
 
 ### Required
 
-* Provide a plot that shows the number of households in each `REGION`
+* Provide a plot that shows the number of households in each `DIVISION`.
 * Provide a plot of the marginal distribution of `YRBUILT` (hint: what kind of variable is this? See the codebook.)
 * Is the market value (`MARKETVAL`) typically higher for households that have a homeowner's association (HOA)?
 * Create a column that replaces `UNITSIZE` values with the midpoint of the range. How does the number of bedrooms change with larger homes?
@@ -73,7 +73,7 @@ Load each of the files listed above into a table (I suggest using `household`, `
 ### Open Ended
 
 * Use `group_by` and `summarize` to investigate a variable not used as a grouping factor in the required sections above. Write up your findings in written form (3 to 5 sentences).
-* If you were looking for an affordable house, where would you choose to live? (Which region)? Define how you will define "affordable" and explain how will you choose to select a region using your measurement of affordability. Implement affordability using `mutate`. Compare the regions and explain your results.
+* If you were looking for an affordable house, where would you choose to live? (Which region as coded in the `DIVISION` column?) Define how you will define "affordable" and explain how will you choose to select a region using your measurement of affordability. Implement affordability using `mutate`. Compare the regions and explain your results.
 * Select two numeric variables not used above and investigate the relationship between the two. Use both graphical and numeric summaries. Write up your findings in a short paragraph.
 
 ## Exploring Person Data
@@ -126,12 +126,12 @@ Write a paragraph describing the difference between these ways of merging the `h
 - Use an inner join on households (left) and mortgages (right) on the `CONTROL` column
 - First aggregate the `mortgages` table to get total mortgage amounts and payments, then just a left join households to the aggregated mortgages table.
 
-If we would want to compare mortgage amounts for primary, second, and HELOC loans for each region? Implement this solution and use a facet plot to show the distributions of primary, secondary, and HELOC loans by region.
+If we would want to compare mortgage amounts for primary, second, and HELOC loans for each region (`DIVISON` column)? Implement this solution and use a facet plot to show the distributions of primary, secondary, and HELOC loans by region.
 
 ### Required
 
 * Using the merge in the previous step, plot the household income `FINCP` against the total mortgage amount. Comment on the results.
-* Using pivoting, create columns for the `AMMORT_primary`, `AMMORT_second`, and `AMMORT_heloc`. For mortgages with both primary and HELOC mortgages, plot the joint distribution of these values. You will probably need to group by `CONTROL` after pivoting to get totals.
+* For this step, we will use the column we created above that merged `AMMORT` and `HELOCLIM`. Suppose this column is called `both_amount`. Using pivoting, create columns for the `both_amount_primary`, `both_amount_secondary`, and `both_amount_heloc`. For mortgages with both primary and HELOC mortgages, plot the joint distribution of these values. You will probably need to group by `CONTROL` after pivoting to get totals.
 
 ### Open Ended
 
