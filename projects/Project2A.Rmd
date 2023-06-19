@@ -93,7 +93,19 @@ Load each of the files listed above into a table (I suggest using `household`, `
 
 * Can a single property have more than one mortgage?
 * Plot the marginal distribution of `PMTAMT` and interpret the results.
-* Plot the conditional distribution for the `AMMORT` (mortgage amount) for each of the `LOANTYPE` categories. Compare both typical values and variation. Write up a 2 or 3 sentences explaining your results.
+* Mortgages (loans using property as collateral) can be broken down into primary
+(has first opportunity to recoup costs in case of a default), secondary (only
+recoups costs after the primary is paid), and home equity (a type of secondary
+where money is loaned based on the difference between the outstanding mortgage
+amount and the assessed value of the property, the "equity"). The `AMMORT`
+contains information on the amount of the mortgage for primary and secondary
+types. With home equity lines of credit (HELOC) loans, home owners have a credit
+limit that they could borrow at any time, which is contained in the `HELOCLIM`
+column. Create a new column that merges `AMMROT` and `HELOCLIM` to give a
+picture how much money has or could be borrowed. Plot the conditional
+distribution of this new column for each of the `LOANTYPE` categories. Compare
+both typical values and variation. Write up a 2 or 3 sentences explaining your
+results.
 
 ### Open Ended
 
